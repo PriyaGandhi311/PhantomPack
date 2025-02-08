@@ -1,0 +1,36 @@
+.profile {
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .profile-details {
+    margin-top: 20px;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    display: inline-block;
+    text-align: left;
+  }
+  
+  .profile-details img {
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    margin-bottom: 15px;
+  }
+  
+  .profile-details p {
+    font-size: 18px;
+    margin: 10px 0;
+  }
+  
+  .profile-details button {
+    padding: 10px 20px;
+    background-color: #008CBA;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 15px;
+  }
