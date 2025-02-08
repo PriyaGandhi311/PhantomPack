@@ -1,5 +1,6 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import { useState } from "react";
+import AuthButton from "./AuthButton";
 import './Profile.css';
 
 const Profile = () => {
@@ -67,7 +68,7 @@ const Profile = () => {
           ) : (
             <button className="order-history-button">Order History</button>
           )}
-          <button className="logout-button">Logout</button>
+          <AuthButton />
         </div>
       </div>
     </div>
