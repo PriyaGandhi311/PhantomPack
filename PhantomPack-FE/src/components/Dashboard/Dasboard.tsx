@@ -17,11 +17,15 @@ const Dashboard = () => {
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
-        <button className="donate-button">Donate</button>
-        <button className="logout-button">Log Out</button>
+        <div>
+          <button className="donate-button">Donate</button>
+          <button className="logout-button">Log Out</button>
+        </div>
       </header>
-      <UpForGrabs />
-      <Leaderboard />
+      <div className="main-content">
+        <UpForGrabs />
+        <Leaderboard />
+      </div>
     </div>
   );
 };

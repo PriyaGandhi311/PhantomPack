@@ -9,7 +9,6 @@
   
   .sections {
     display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
+    flex-direction: column; /* Stack sections vertically */
     gap: 20px;
   }
