@@ -141,3 +141,8 @@ body {
 .main-content {
   animation: fadeIn 0.5s ease-in-out;
 }
+.dashboard-logo {
+  width: 100px; /* Adjust size as needed */
+  height: 50px;
+  cursor: pointer;
+}

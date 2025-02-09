@@ -104,6 +104,9 @@ const Dashboard = () => {
         <div className="dashboard">
             {/* Header */}
             <header className="dashboard-header">
+            <Link to="/">
+                <img src="/image.png" alt="Dashboard Logo" className="dashboard-logo" />
+            </Link>
                 <div className="search-bar">
                     <input
                         type="text"
@@ -112,6 +115,7 @@ const Dashboard = () => {
                         onChange={(e) => setSearchQuery(e.target.value)}
                         className="search-input"
                     />
+
                     <button className="search-button">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
