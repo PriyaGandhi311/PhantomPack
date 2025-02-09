@@ -7,6 +7,8 @@ import uuid
 import base64
 import requests
 from datetime import datetime
+from dotenv import load_dotenv
+import os
 
 app = Flask(__name__)
 CORS(app)
@@ -22,6 +24,9 @@ def allowed_file(filename):
 client = MongoClient("mongodb+srv://kotharismiti24:iMilLTSJntyxUPG8@cluster0.kw7o2.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
 
 db = client.Donation_app 
+
+load_dotenv()
+api_key = os.getenv('API_KEY')
 
 @app.route('/')
 def test_connection():
@@ -326,7 +331,8 @@ def chat():
     user_message = request.get_json(force=True)['message']
     print(f"User message: {user_message}")  # Debugging
 
-    response = get_gemini_response(user_message)
+    # Pass the api_key as an argument
+    response = get_gemini_response(user_message, api_key)
 
     print(f"Response from Gemini: {response}")  # Debugging
 
@@ -339,9 +345,7 @@ def chat():
 
     return jsonify({'response': response}), 200, headers
 
-def get_gemini_response(message):
-    api_key = 'AIzaSyBViAfdD5UsTlQEyNruzesYeJTm3uuDpQg'
-    
+def get_gemini_response(message, api_key):
     if not api_key:
         print("Error: Missing API Key")
         return "API Key is missing"
