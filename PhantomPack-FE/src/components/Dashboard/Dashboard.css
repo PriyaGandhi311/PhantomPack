@@ -1,8 +1,7 @@
 .dashboard {
-  padding: 20px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  padding: 20px;
 }
 
 header {
@@ -12,28 +11,17 @@ header {
   margin-bottom: 20px;
 }
 
-.button-group {
-  display: flex;
-  gap: 10px; /* Add gap between buttons */
-  align-items: center;
+.profile-button, .donate-button, .logout-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
 }
 
 .profile-button {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
   background-color: #4CAF50;
   color: white;
-}
-
-.donate-button, .logout-button {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
 }
 
 .donate-button {
@@ -69,5 +57,4 @@ input[type="text"] {
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  align-self: flex-start; /* Prevents stretching to full height */
 }
