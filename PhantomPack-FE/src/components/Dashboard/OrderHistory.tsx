@@ -65,7 +65,7 @@ const OrderHistory = () => {
       }
   
       console.log("Transaction successful:", data);
-      alert(`Transaction successful! You earned ${data.points_earned} points.`);
+      alert(`Transaction successful! Donor earned ${data.points_earned} points.`);
     } catch (error) {
       console.error("Error verifying transaction:", error);
     }
