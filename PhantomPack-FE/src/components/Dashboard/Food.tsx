@@ -1,13 +1,14 @@
 import { useState } from 'react';
 import './Food.css';
-
+import { Link } from 'react-router-dom';
 // Define the type for food item
-type FoodItem = {
-  id: number;
+interface FoodItem {
   image: string;
-  name: string;
-  donatedBy: string;
-};
+  item_name: string;
+  item_id: string;
+  category: string;
+  donor_name: string;
+}
 
 // Props for the Food component
 type FoodProps = {
@@ -25,11 +26,18 @@ const Food = ({ items }: FoodProps) => {
       <h3>Food</h3>
       <div className="cards-container">
         {visibleItems.map((item) => (
-          <div key={item.id} className="card">
-            <img src={item.image} alt={item.name} className="food-image" />
-            <p>Item: {item.name}</p>
-            <p>Donated by: {item.donatedBy}</p>
+          <Link to={"/item/"+item.item_id} >
+         
+          <div key={item.item_id} className="card">
+             {item.image ? (
+              <img src={`data:image/jpeg;base64,${item.image}`} alt={item.item_name} className="food-image"/>
+            ) : (
+              <p>No image available</p>
+            )}
+            <p>Item: {item.item_name}</p>
+            <p>Donated by: {item.donor_name}</p>
           </div>
+          </Link>
         ))}
       </div>
       {items.length > initialItemsToShow && (

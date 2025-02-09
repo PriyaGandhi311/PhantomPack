@@ -1,10 +1,11 @@
 import './Accessories.css';
 import {useState} from 'react';
-type AccessoriesItems = {
-  id: number;
-  image : string;
-  name: string;
-  donatedBy: string,
+interface AccessoriesItems {
+  image: string;
+  item_name: string;
+  item_id: string;
+  category: string;
+  donor_name: string;
 }
 
 type AccessoriesProps = {
@@ -23,10 +24,14 @@ const Accessories = ({items} : AccessoriesProps) => {
       <h3>Accessories</h3>
       <div className="cards-container">
         {visibleItems.map((item)=>(
-          <div key={item.id} className="card">
-            <img src={item.image} alt={item.name} className='accessories-image'/>
-            <p>{item.name}</p>
-            <p>Donated by: {item.donatedBy}</p>
+          <div key={item.item_id} className="card">
+            {item.image ? (
+              <img src={`data:image/jpeg;base64,${item.image}`} alt={item.item_name} className="accessories-image"/>
+            ) : (
+              <p>No image available</p>
+            )}
+            <p>{item.item_name}</p>
+            <p>Donated by: {item.donor_name}</p>
           </div>
         ))}
       </div>

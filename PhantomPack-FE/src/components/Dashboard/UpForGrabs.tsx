@@ -1,99 +1,54 @@
+import React, { useEffect, useState } from 'react';
 import Food from './Food';
 import Clothes from './Clothes';
 import Accessories from './Accessories';
 import Others from './Others';
 import './UpForGrabs.css';
 
-const UpForGrabs = () => {
-  // Example food items
-  const foodItems = [
-    {
-      id: 1,
-      image: 'https://via.placeholder.com/200',
-      name: 'Fresh Apples',
-      donatedBy: 'User123',
-    },
-    {
-      id: 2,
-      image: 'https://via.placeholder.com/200',
-      name: 'Organic Bananas',
-      donatedBy: 'User456',
-    },
-    {
-      id: 3,
-      image: 'https://via.placeholder.com/200',
-      name: 'Whole Grain Bread',
-      donatedBy: 'User789',
-    },
-    {
-      id: 4,
-      image: 'https://via.placeholder.com/150',
-      name: 'Organic Spinach',
-      donatedBy: 'User101',
-    },
-    {
-      id: 5,
-      image: 'https://via.placeholder.com/150',
-      name: 'Almond Milk',
-      donatedBy: 'User202',
-    },
-  ];
+// Define the type for an item
+interface Item {
+  image: string;
+  item_name: string;
+  item_id: string;
+  category: string;
+  donor_name: string;
+}
 
-  const clothesItems = [
-    {
-      id: 1,
-      image: 'https://via.placeholder.com/200',
-      name: 'Fresh Apples',
-      donatedBy: 'User123',
-    },
-    {
-      id: 2,
-      image: 'https://via.placeholder.com/200',
-      name: 'Organic Bananas',
-      donatedBy: 'User456',
-    },
-    {
-      id: 3,
-      image: 'https://via.placeholder.com/200',
-      name: 'Whole Grain Bread',
-      donatedBy: 'User789',
-    },
-    {
-      id: 4,
-      image: 'https://via.placeholder.com/150',
-      name: 'Organic Spinach',
-      donatedBy: 'User101',
-    },
-    {
-      id: 5,
-      image: 'https://via.placeholder.com/150',
-      name: 'Almond Milk',
-      donatedBy: 'User202',
-    },
-  ]
-  const accessoriesItems = [{
-    id: 5,
-    image: 'https://via.placeholder.com/150',
-    name: 'Almond Milk',
-    donatedBy: 'User202',
-  },
-]
+const UpForGrabs: React.FC = () => {
+  // State for each category of items
+  const [foodItems, setFoodItems] = useState<Item[]>([]);
+  const [clothesItems, setClothesItems] = useState<Item[]>([]);
+  const [accessoriesItems, setAccessoriesItems] = useState<Item[]>([]);
+  const [othersItems, setOthersItems] = useState<Item[]>([]);
 
-const othersItems = [{
-  id: 5,
-  image: 'https://via.placeholder.com/150',
-  name: 'Almond Milk',
-  donatedBy: 'User202',
-},
-]
+  useEffect(() => {
+    // Fetch data from the backend
+    fetch('http://localhost:5000/items')
+      .then((response) => response.json())
+      .then((data: Item[]) => {
+        // Filter items based on category
+        const food = data.filter((item) => item.category === 'food');
+        const clothes = data.filter((item) => item.category === 'clothes');
+        const accessories = data.filter((item) => item.category === 'accessories');
+        const others = data.filter((item) => item.category === 'others');
+        console.log(data)
+        // Update state with filtered items
+        setFoodItems(food);
+        setClothesItems(clothes);
+        setAccessoriesItems(accessories);
+        setOthersItems(others);
+      })
+      .catch((error) => console.error('Error fetching data:', error));
+  }, []);
+
   return (
     <div className="up-for-grabs">
       <h2>Up For Grabs</h2>
       <div className="sections">
         <Food items={foodItems} />
-        <Clothes items = {clothesItems} />
-        <Accessories items = {accessoriesItems}/>
-        <Others items = {othersItems} />
+        <Clothes items={clothesItems} />
+        <Accessories items={accessoriesItems} />
+        <Others items={othersItems} />
       </div>
     </div>
   );

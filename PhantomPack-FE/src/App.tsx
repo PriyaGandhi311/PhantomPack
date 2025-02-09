@@ -12,6 +12,7 @@ function App() {
         <Route path="/donate" element={<DonateForm />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/order-history" element={<OrderHistory />} />
+        <Route path="/item/:id" element={null} />
       </Routes>
     </Router>
   );
