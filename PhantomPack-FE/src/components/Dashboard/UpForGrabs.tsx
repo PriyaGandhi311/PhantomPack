@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import Food from './Food';
-import Clothes from './Clothes';
 import Accessories from './Accessories';
+import Clothes from './Clothes';
+import Food from './Food';
 import Others from './Others';
 import './UpForGrabs.css';
 
@@ -14,7 +14,11 @@ interface Item {
   donor_name: string;
 }
 
-const UpForGrabs: React.FC = () => {
+interface UpForGrabsProps {
+  searchQuery: string;
+}
+
+const UpForGrabs: React.FC<UpForGrabsProps> = ({ searchQuery }) => {
   // State for each category of items
   const [foodItems, setFoodItems] = useState<Item[]>([]);
   const [clothesItems, setClothesItems] = useState<Item[]>([]);
@@ -41,14 +45,21 @@ const UpForGrabs: React.FC = () => {
       .catch((error) => console.error('Error fetching data:', error));
   }, []);
 
+  // Function to filter items based on search query
+  const filterItems = (items: Item[]) => {
+    return items.filter((item) =>
+      item.item_name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  };
+
   return (
     <div className="up-for-grabs">
       <h2>Up For Grabs</h2>
       <div className="sections">
-        <Food items={foodItems} />
-        <Clothes items={clothesItems} />
-        <Accessories items={accessoriesItems} />
-        <Others items={othersItems} />
+        <Food items={filterItems(foodItems)} />
+        <Clothes items={filterItems(clothesItems)} />
+        <Accessories items={filterItems(accessoriesItems)} />
+        <Others items={filterItems(othersItems)} />
       </div>
     </div>
   );
