@@ -372,6 +372,13 @@ def get_gemini_response(message):
     except Exception as e:
         print(f"Error: {e}")  # Debugging
         return "Sorry, I couldn't process your request."
+    
+@app.route('/leaderboard/top5', methods=['GET'])
+def get_top5_users():
+    # Fetch all users and sort by points in descending order
+    users = list(db.Users.find({}, {"name": 1, "points": 1, "_id": 0}).sort("points", -1).limit(5))
+
+    return jsonify(users), 200
 
 if __name__ == '__main__':
     app.run(debug=True)
