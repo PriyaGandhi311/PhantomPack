@@ -145,9 +145,11 @@ def get_item(item_id):
     if item:
         # Convert ObjectId to string for JSON serialization
         item['_id'] = str(item['_id'])
-        item['donor_id'] = str(item['donor_id'])
-        if item['receiver_id']:
-            item['receiver_id'] = str(item['receiver_id'])
+        existing_user = db.Users.find_one({"userId": str(item["donor_id"])})
+        item["donor_name"] = existing_user["name"]
+        image_base64 = base64.b64encode(item['image']).decode('utf-8')
+        item["image"] = image_base64
+        
         return jsonify(item), 200
     else:
         return jsonify({"error": "Item not found"}), 404
