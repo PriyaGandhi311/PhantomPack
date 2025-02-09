@@ -1,60 +1,116 @@
+/* General Styles */
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #f9fafb;
+  margin: 0;
+  padding: 0;
+}
+
 .dashboard {
   display: flex;
   flex-direction: column;
   padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-header {
+/* Header */
+.dashboard-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
+  padding: 20px;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
+.search-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.search-input {
+  padding: 10px 15px;
+  width: 300px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.search-input:focus {
+  border-color: #3b82f6;
+}
+
+.search-button {
+  padding: 10px;
+  border: none;
+  background-color: #3b82f6;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.search-button:hover {
+  background-color: #2563eb;
+}
+
+/* Button Group */
 .button-group {
   display: flex;
-  gap: 10px; /* Add gap between buttons */
+  gap: 10px;
   align-items: center;
 }
 
-.profile-button, .donate-button, .logout-button, .therapy-chat-button {
+.button {
   padding: 10px 20px;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
   cursor: pointer;
   font-size: 16px;
+  text-decoration: none;
+  color: white;
+  transition: transform 0.2s ease, background-color 0.3s ease;
 }
 
-.profile-button {
-  background-color: #4CAF50;
-  color: white;
+.button:hover {
+  transform: translateY(-2px);
 }
 
 .donate-button {
-  background-color: #008CBA;
-  color: white;
+  background-color: #10b981; /* Green */
 }
 
-.logout-button {
-  background-color: #f44336;
-  color: white;
-}
-.therapy-chat-button{
-  background-color: #a2ce69;
-  color: white;
+.donate-button:hover {
+  background-color: #059669;
 }
 
-input[type="text"] {
-  padding: 10px;
-  width: 300px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  font-size: 16px;
+.profile-button {
+  background-color: #3b82f6; /* Blue */
 }
 
+.profile-button:hover {
+  background-color: #2563eb;
+}
+
+.therapy-chat-button {
+  background-color: #8b5cf6; /* Purple */
+}
+
+.therapy-chat-button:hover {
+  background-color: #7c3aed;
+}
+
+/* Main Content */
 .main-content {
   display: flex;
   gap: 20px;
+  margin-top: 20px;
 }
 
 .up-for-grabs {
@@ -62,9 +118,26 @@ input[type="text"] {
 }
 
 .leaderboard {
-  width: 300px; /* Fixed width for leaderboard */
-  background-color: #f9f9f9;
+  width: 300px;
+  background-color: white;
   padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+      opacity: 0;
+      transform: translateY(10px);
+  }
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}
+
+.dashboard-header,
+.main-content {
+  animation: fadeIn 0.5s ease-in-out;
 }
