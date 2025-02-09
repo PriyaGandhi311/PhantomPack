@@ -88,13 +88,18 @@ const Item: React.FC = () => {
     return (
         <div className="item-details">
             {item?.image ? (
-                <img
-                    src={`data:image/jpeg;base64,${item.image}`}
-                    alt={item.item_name}
-                    className="item-image"
-                />
+                <div className="item-image-wrapper">
+                    <img
+                        src={`data:image/jpeg;base64,${item.image}`}
+                        alt={item.item_name}
+                        className="item-image"
+                        style={{ width: "100%", height: "100%", paddingTop: "15px" }} // Added to override any default sizing
+                    />
+                </div>
             ) : (
-                <div className="item-image no-image">No image available</div>
+                <div className="item-image-wrapper">
+                    <div className="no-image">No image available</div>
+                </div>
             )}
             <div className="item-content">
                 <div className="item-category">{item?.category}</div>
@@ -111,7 +116,10 @@ const Item: React.FC = () => {
                 <button
                     className="request-button"
                     onClick={handleRequest}
-                    disabled={item?.receiver_id !== null || user?.sub === item?.donor_id}
+                    disabled={
+                        item?.receiver_id !== null ||
+                        user?.sub === item?.donor_id
+                    }
                 >
                     {item?.receiver_id ? "Already Claimed" : "Request Item"}
                 </button>
