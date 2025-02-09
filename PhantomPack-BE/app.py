@@ -2,9 +2,9 @@ from flask import Flask, request, jsonify
 from bson.objectid import ObjectId 
 from bson.binary import Binary
 from pymongo import MongoClient
-from werkzeug.utils import secure_filename
 from flask_cors import CORS 
 import uuid
+import base64
 
 app = Flask(__name__)
 CORS(app)
@@ -78,6 +78,7 @@ def register_user():
 @app.route('/donate', methods=['POST'])
 def donate_item():
     data = request.form
+    item_name = data.get('itemName')
     category = data.get('category')
     description = data.get('description')
     expiry_date = data.get('expiry_date')
@@ -99,6 +100,7 @@ def donate_item():
     item_id = str(uuid.uuid4())
     
     item = db.items.insert_one({
+        "item_name":item_name,
         "item_id": item_id,
         "category": category,
         "description": description,
@@ -114,17 +116,26 @@ def donate_item():
 def get_items():
     items = db.items.find()
     items_list = []
+
     
     for item in items:
+        existing_user = db.Users.find_one({"userId": str(item["donor_id"])})
+        # if 'image' in item and isinstance(item['image'], Binary):
+        image_base64 = base64.b64encode(item['image']).decode('utf-8')
+        # else:
+        #     image_base64 = None
         items_list.append({
-            "item_id": str(item["_id"]),
+            "image" : image_base64,
+            "item_name":item["item_name"],
+            "item_id": str(item["item_id"]),
             "category": item["category"],
-            "description": item["description"],
-            "expiry_date": item.get("expiry_date", ""),
-            "donor_id": str(item["donor_id"]),
-            "receiver_id": str(item["receiver_id"]) if item.get("receiver_id") else None
+            # "description": item["description"],
+            # "expiry_date": item.get("expiry_date", ""),
+            "donor_name" : existing_user["name"],
+            # "donor_id": str(item["donor_id"]),
+            # "receiver_id": str(item["receiver_id"]) if item.get("receiver_id") else None
         })
-    
+    print("item_list",  items_list)
     return jsonify(items_list), 200
 
 @app.route('/items/<item_id>', methods=['GET'])
