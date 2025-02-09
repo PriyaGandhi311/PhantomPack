@@ -103,7 +103,7 @@ def donate_item():
         "category": category,
         "description": description,
         "expiry_date": expiry_date,
-        "donor_id": ObjectId(donor_id),
+        "donor_id": donor_id,
         "receiver_id": None,
         "image": image_binary
     })
