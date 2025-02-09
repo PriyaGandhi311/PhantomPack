@@ -4,6 +4,7 @@ import DonateForm from './components/Dashboard/DonateForm';
 import Item from './components/Dashboard/Item';
 import OrderHistory from './components/Dashboard/OrderHistory';
 import Profile from './components/Dashboard/Profile';
+import TherapyChat from './components/Dashboard/TherapyChat';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/order-history" element={<OrderHistory />} />
         <Route path="/item/:id" element={<Item />} />
+        <Route path="/therapy-chat" element={<TherapyChat />} />
       </Routes>
     </Router>
   );

@@ -5,7 +5,7 @@ from pymongo import MongoClient
 from flask_cors import CORS 
 import uuid
 import base64
-
+import requests
 app = Flask(__name__)
 CORS(app)
 
@@ -297,5 +297,61 @@ def get_orders(user_id):
         "donated": convert_object_ids(donated_items),
         "received": convert_object_ids(received_items),
     }), 200
+
+
+
+@app.route('/therapy-chat', methods=['POST'])
+def chat():
+    print(request.get_json(force=True))
+    user_message = request.get_json(force=True)['message']
+    print(f"User message: {user_message}")  # Debugging
+
+    response = get_gemini_response(user_message)
+
+    print(f"Response from Gemini: {response}")  # Debugging
+
+    # Manually add CORS headers
+    headers = {
+        'Access-Control-Allow-Origin': '*',  # Allow all origins
+        'Access-Control-Allow-Methods': 'POST',  # Allow only POST
+        'Access-Control-Allow-Headers': 'Content-Type',  # Allow specific headers
+    }
+
+    return jsonify({'response': response}), 200, headers
+
+def get_gemini_response(message):
+    api_key = 'AIzaSyBViAfdD5UsTlQEyNruzesYeJTm3uuDpQg'
+    
+    if not api_key:
+        print("Error: Missing API Key")
+        return "API Key is missing"
+
+    try:
+        url = f"https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent?key={api_key}"
+        
+        headers = {
+            "Content-Type": "application/json"
+        }
+        
+        data = {
+            "contents": [{"parts": [{"text": message}]}]
+        }
+
+        response = requests.post(url, headers=headers, json=data)
+        response.raise_for_status()
+
+        result = response.json()
+        print(f"API response: {result}")  # Debugging
+
+        # Extracting response correctly
+        if 'candidates' in result and len(result['candidates']) > 0:
+            return result['candidates'][0]['content']['parts'][0]['text']
+        else:
+            return "No response from Gemini."
+
+    except Exception as e:
+        print(f"Error: {e}")  # Debugging
+        return "Sorry, I couldn't process your request."
+
 if __name__ == '__main__':
     app.run(debug=True)

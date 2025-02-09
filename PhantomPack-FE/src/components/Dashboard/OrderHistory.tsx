@@ -25,7 +25,7 @@ const OrderHistory = () => {
       try {
         const response = await fetch(`http://localhost:5000/orders/${user.sub}`);
         const data = await response.json();
-        console.log(data.donated)
+        // console.log(data.donated)
         // Set donated and received items
         setDonatedItems(data.donated);
         setReceivedItems(data.received);
