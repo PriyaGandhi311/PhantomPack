@@ -4,7 +4,7 @@
   <img src="./PhantomPack-FE/public/image.png" alt="PhantomPack Logo" width="200"/>
 </p>
 
-A full-stack web application facilitating community donations with an integrated therapy chatbot. Built for HackNCState 2025, PhantomPack connects donors with those in need while providing mental health support.
+**PhantomPack** is a revolutionary community-driven donation platform that transforms the way we give back. Imagine connecting donors directly with those in need while gamifying the giving experience through an innovative points system. But we're more than just donations - we've integrated an AI-powered therapy chatbot because we understand that sometimes, people need emotional support as much as material assistance. Our platform bridges the gap between material generosity and mental well-being, creating a complete support ecosystem. With **PhantomPack**, we're not just moving items from one person to another; we're building a compassionate community that cares for both body and mind
 
 ## 🌟 Features
 
