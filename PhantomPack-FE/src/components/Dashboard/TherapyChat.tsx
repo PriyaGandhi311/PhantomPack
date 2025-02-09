@@ -1,4 +1,5 @@
 // src/TherapyChat.tsx
+import './TherapyChat.css'
 import React, { useState, useRef, useEffect } from 'react';
 
 const TherapyChat: React.FC = () => {
@@ -48,6 +49,7 @@ const TherapyChat: React.FC = () => {
 
   return (
     <div className="bg-gradient-to-br from-blue-100 to-purple-200 flex items-center justify-center h-screen p-4">
+      <div className="chat-wrapper">
       <div className="chat-container bg-white rounded-2xl shadow-xl p-6 w-full max-w-lg border border-gray-200 flex flex-col">
         <h1 className="text-3xl font-bold text-center text-gray-700 mb-4">Therapy Chat</h1>
 
@@ -94,6 +96,7 @@ const TherapyChat: React.FC = () => {
             Send
           </button>
         </div>
+      </div>
       </div>
     </div>
   );

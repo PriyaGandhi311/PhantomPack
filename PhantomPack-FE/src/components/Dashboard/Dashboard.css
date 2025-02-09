@@ -17,7 +17,7 @@ header {
   align-items: center;
 }
 
-.profile-button, .donate-button, .logout-button {
+.profile-button, .donate-button, .logout-button, .therapy-chat-button {
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
@@ -37,6 +37,10 @@ header {
 
 .logout-button {
   background-color: #f44336;
+  color: white;
+}
+.therapy-chat-button{
+  background-color: #a2ce69;
   color: white;
 }
 
