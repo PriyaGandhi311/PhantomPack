@@ -6,6 +6,8 @@ from flask_cors import CORS
 import uuid
 import base64
 import requests
+from datetime import datetime
+
 app = Flask(__name__)
 CORS(app)
 
@@ -107,7 +109,8 @@ def donate_item():
         "expiry_date": expiry_date,
         "donor_id": donor_id,
         "receiver_id": None,
-        "image": image_binary
+        "image": image_binary,
+        "verified": False
     })
     
     return jsonify({"message": "Item donated successfully", "item_id": item_id}), 201
@@ -150,6 +153,28 @@ def get_item(item_id):
         return jsonify(item), 200
     else:
         return jsonify({"error": "Item not found"}), 404
+
+@app.route('/items/request/<item_id>', methods=['POST'])
+def request_item(item_id):
+    try:
+        data = request.json
+        receiver_id = data.get('receiver_id')
+
+        if not receiver_id:
+            return jsonify({"error": "receiver_id is required"}), 400
+
+        result = db.items.update_one(
+            {"item_id": item_id, "receiver_id": None},
+            {"$set": {"receiver_id": receiver_id}}
+        )
+
+        if result.modified_count == 0:
+            return jsonify({"error": "Item not found or already claimed"}), 400
+
+        return jsonify({"message": "Item requested successfully"}), 200
+
+    except Exception as e:
+        return jsonify({"error": "Internal server error"}), 500
 
 @app.route('/users', methods=['GET'])
 def get_users():
@@ -228,10 +253,7 @@ def create_transaction():
     if not item:
         return jsonify({"error": "Item not found"}), 404
 
-    if item.get('receiver_id'):
-        return jsonify({"error": "Item already received"}), 400
-
-    donor = db.users.find_one({"user_id": item['donor_id']})
+    donor = db.Users.find_one({"userId": item['donor_id']})
     if not donor:
         return jsonify({"error": "Donor not found"}), 404
 
@@ -250,14 +272,14 @@ def create_transaction():
         "transaction_id": transaction_id,
         "item_id": item_id,
         "donor_id": item['donor_id'],
-        "receiver_id": ObjectId(receiver_id),
+        "receiver_id": receiver_id,
         "transaction_date": datetime.utcnow(),
         "points_earned": points_earned
     })
 
     db.items.update_one(
         {"item_id": item_id},
-        {"$set": {"receiver_id": ObjectId(receiver_id)}}
+        {"$set": {"verified": True}}
     )
 
     db.users.update_one(
