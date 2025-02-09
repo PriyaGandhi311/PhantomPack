@@ -282,9 +282,9 @@ def create_transaction():
         {"$set": {"verified": True}}
     )
 
-    db.users.update_one(
-        {"user_id": item['donor_id']},
-        {"$inc": {"points": points_earned}}
+    db.Users.update_one(
+        {"userId": donor['userId']},
+        {"$set": {"points": donor['points'] + points_earned}}
     )
 
     return jsonify({
@@ -319,8 +319,6 @@ def get_orders(user_id):
         "donated": convert_object_ids(donated_items),
         "received": convert_object_ids(received_items),
     }), 200
-
-
 
 @app.route('/therapy-chat', methods=['POST'])
 def chat():

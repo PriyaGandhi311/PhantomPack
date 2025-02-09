@@ -94,7 +94,7 @@ const OrderHistory = () => {
                       className="item-image"
                     />
                   )}
-                  <div className="item-details">
+                  <div>
                     <h4>{item.item_name}</h4>
                     <p>{item.description}</p>
                   </div>
