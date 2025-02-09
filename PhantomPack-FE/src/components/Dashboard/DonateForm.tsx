@@ -3,11 +3,9 @@ import './DonateForm.css';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useNavigate } from 'react-router-dom';
 
-type DonateFormProps = {
-  onClose: () => void; // Function to close the form
-};
 
-const DonateForm = ({ onClose }: DonateFormProps) => {
+
+const DonateForm = () => {
   const [itemName, setItemName] = useState('');
   const [category, setCategory] = useState('food');
   const [images, setImages] = useState<File[]>([]);
@@ -63,7 +61,8 @@ const DonateForm = ({ onClose }: DonateFormProps) => {
 
       if (response.ok) {
         alert('Donation submitted successfully!');
-        onClose(); // Close the form after submission
+       
+        handleCancel();
       } else {
         const errorData = await response.json();
         alert(`Failed to submit donation: ${errorData.message || 'Unknown error'}`);
