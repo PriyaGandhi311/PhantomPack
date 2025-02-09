@@ -340,7 +340,7 @@ def chat():
     return jsonify({'response': response}), 200, headers
 
 def get_gemini_response(message):
-    api_key = 'AIzaSyBViAfdD5UsTlQEyNruzesYeJTm3uuDpQg'
+    api_key = ''
     
     if not api_key:
         print("Error: Missing API Key")
