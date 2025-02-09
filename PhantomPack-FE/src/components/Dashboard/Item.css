@@ -1,64 +1,166 @@
 /* Loading and error messages */
-.loading, .error {
+.loading,
+.error {
     text-align: center;
     font-size: 1.2rem;
-    margin-top: 2rem;
+    margin: 3rem auto;
+    padding: 1rem;
+    border-radius: 8px;
+}
+
+.loading {
+    color: #3498db;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+    100% {
+        opacity: 1;
+    }
 }
 
 .error {
-    color: #ff4d4d;
+    color: #e74c3c;
+    background-color: #fde8e8;
+    max-width: 400px;
 }
 
 /* Item details container */
 .item-details {
-    max-width: 600px;
+    max-width: 800px;
     margin: 2rem auto;
-    padding: 2rem;
+    padding: 0;
     background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+/* Item image container */
+.item-image {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    display: block;
+    margin: 0;
+}
+
+/* Add these styles to your existing CSS */
+.request-button {
+    position: absolute;
+    bottom: 1.5rem;
+    right: 2rem;
+    background-color: #3498db;
+    color: white;
+    padding: 0.75rem 1.5rem;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: none;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.request-button:hover {
+    background-color: #2980b9;
+}
+
+.request-button:disabled {
+    background-color: #bdc3c7;
+    cursor: not-allowed;
+}
+
+/* Update item-content to handle absolute positioning of button */
+.item-content {
+    padding: 2rem;
+    position: relative;
+    min-height: 200px; /* Ensure enough space for the button */
+}
+
+@media (max-width: 768px) {
+    .request-button {
+        position: static;
+        width: 100%;
+        margin-top: 1.5rem;
+    }
+}
+
+/* Item name */
+.item-name {
+    font-size: 2rem;
+    color: #1a1a1a;
+    margin: 0 0 0.5rem 0;
+    font-weight: 600;
 }
 
 /* Item category */
 .item-category {
-    font-size: 2rem;
-    color: #2c3e50;
-    margin-bottom: 1rem;
-    border-bottom: 2px solid #3498db;
-    padding-bottom: 0.5rem;
+    display: inline-block;
+    font-size: 0.9rem;
+    color: #3498db;
+    background-color: #ebf5ff;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 500;
 }
 
 /* Item description */
 .item-description {
     font-size: 1.1rem;
-    line-height: 1.6;
-    color: #555;
-    margin-bottom: 1.5rem;
+    line-height: 1.7;
+    color: #4a4a4a;
+    margin-bottom: 2rem;
 }
 
 /* Expiry date */
 .item-expiry-date {
     font-size: 1rem;
     color: #e67e22;
-    margin-bottom: 1rem;
+    background-color: #fff3e0;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    display: inline-block;
+    margin-bottom: 1.5rem;
 }
 
-/* Donor and receiver IDs */
-.item-donor, .item-receiver {
+/* Donor section */
+.item-donor {
+    padding-top: 1.5rem;
+    border-top: 1px solid #eee;
     font-size: 1rem;
-    color: #34495e;
-    margin-bottom: 0.5rem;
+    color: #666;
 }
 
-.item-receiver {
-    color: #27ae60;
+.item-donor strong {
+    color: #2c3e50;
+    font-weight: 600;
 }
 
-/* Item image */
-.item-image img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 8px;
-    margin-top: 1rem;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .item-details {
+        margin: 1rem;
+        border-radius: 8px;
+    }
+
+    .item-image {
+        height: 300px;
+    }
+
+    .item-content {
+        padding: 1.5rem;
+    }
+
+    .item-name {
+        font-size: 1.5rem;
+    }
 }

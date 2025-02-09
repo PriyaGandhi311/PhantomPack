@@ -154,6 +154,28 @@ def get_item(item_id):
     else:
         return jsonify({"error": "Item not found"}), 404
 
+@app.route('/items/request/<item_id>', methods=['POST'])
+def request_item(item_id):
+    try:
+        data = request.json
+        receiver_id = data.get('receiver_id')
+
+        if not receiver_id:
+            return jsonify({"error": "receiver_id is required"}), 400
+
+        result = db.items.update_one(
+            {"item_id": item_id, "receiver_id": None},
+            {"$set": {"receiver_id": receiver_id}}
+        )
+
+        if result.modified_count == 0:
+            return jsonify({"error": "Item not found or already claimed"}), 400
+
+        return jsonify({"message": "Item requested successfully"}), 200
+
+    except Exception as e:
+        return jsonify({"error": "Internal server error"}), 500
+
 @app.route('/users', methods=['GET'])
 def get_users():
     users = db.Users.find()
