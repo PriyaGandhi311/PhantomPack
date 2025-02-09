@@ -1,49 +1,100 @@
 /* Order History Styles */
 .order-section {
-    flex: 1;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
-  }
-  
-  .order-section h3 {
-    margin-bottom: 15px;
-    color: #333;
-    border-bottom: 2px solid #eee;
-    padding-bottom: 10px;
-  }
-  
-  .order-item-card {
-    display: flex;
-    align-items: center;
-    padding: 15px;
-    margin-bottom: 15px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  }
-  
-  .item-image {
-    width: 80px;
-    height: 80px;
-    object-fit: cover;
-    border-radius: 4px;
-    margin-right: 15px;
-  }
-  
-  .item-details {
-    flex: 1;
-  }
-  
-  .item-details h4 {
-    margin: 0 0 5px 0;
-    color: #2c3e50;
-  }
-  
-  .item-details p {
-    margin: 3px 0;
-    color: #666;
-    font-size: 0.9em;
-  }
+  flex: 1;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.order-section h3 {
+  margin-bottom: 15px;
+  color: #333;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 10px;
+}
+
+.order-item-card {
+  position: relative;
+  display: flex;
+  padding: 15px;
+  margin-bottom: 15px;
+  background-color: transparent; /* Remove the background color */
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  min-height: 110px;
+}
+
+/* You might also want to remove or modify these hover effects since they'll be less visible without the background */
+.order-item-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.item-image {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 4px;
+  margin-right: 15px;
+}
+
+.item-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-right: 100px; /* Make space for verify button */
+}
+
+.item-details h4 {
+  margin: 0 0 8px 0;
+  color: #333;
+  font-size: 1.1em;
+}
+
+.item-details p {
+  margin: 0;
+  color: #666;
+  font-size: 0.9em;
+  line-height: 1.4;
+}
+
+.verify-button {
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9em;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  white-space: nowrap;
+}
+
+.verify-button:hover {
+  background-color: #45a049;
+  transform: scale(1.05);
+}
+
+.verify-button:active {
+  transform: scale(0.95);
+}
+
+.verify-button:disabled {
+  background-color: #bdc3c7;
+  cursor: not-allowed;
+}
+
+/* Make sure links don't affect the layout */
+.order-item-card a {
+  display: flex;
+  flex: 1;
+  text-decoration: none;
+  color: inherit;
+}

@@ -11,6 +11,7 @@ interface Item {
     donor_name: string;
     image: string; // Binary image data as a base64 string
     item_name: string;
+    donor_id: string;
     receiver_id: string;
 }
 
@@ -110,7 +111,7 @@ const Item: React.FC = () => {
                 <button
                     className="request-button"
                     onClick={handleRequest}
-                    disabled={item?.receiver_id !== null}
+                    disabled={item?.receiver_id !== null || user?.sub === item?.donor_id}
                 >
                     {item?.receiver_id ? "Already Claimed" : "Request Item"}
                 </button>

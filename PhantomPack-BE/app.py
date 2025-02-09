@@ -5,6 +5,7 @@ from pymongo import MongoClient
 from flask_cors import CORS 
 import uuid
 import base64
+from datetime import datetime
 
 app = Flask(__name__)
 CORS(app)
@@ -107,7 +108,8 @@ def donate_item():
         "expiry_date": expiry_date,
         "donor_id": donor_id,
         "receiver_id": None,
-        "image": image_binary
+        "image": image_binary,
+        "verified": False
     })
     
     return jsonify({"message": "Item donated successfully", "item_id": item_id}), 201
@@ -250,10 +252,7 @@ def create_transaction():
     if not item:
         return jsonify({"error": "Item not found"}), 404
 
-    if item.get('receiver_id'):
-        return jsonify({"error": "Item already received"}), 400
-
-    donor = db.users.find_one({"user_id": item['donor_id']})
+    donor = db.Users.find_one({"userId": item['donor_id']})
     if not donor:
         return jsonify({"error": "Donor not found"}), 404
 
@@ -272,14 +271,14 @@ def create_transaction():
         "transaction_id": transaction_id,
         "item_id": item_id,
         "donor_id": item['donor_id'],
-        "receiver_id": ObjectId(receiver_id),
+        "receiver_id": receiver_id,
         "transaction_date": datetime.utcnow(),
         "points_earned": points_earned
     })
 
     db.items.update_one(
         {"item_id": item_id},
-        {"$set": {"receiver_id": ObjectId(receiver_id)}}
+        {"$set": {"verified": True}}
     )
 
     db.users.update_one(
