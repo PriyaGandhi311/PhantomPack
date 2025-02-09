@@ -1,0 +1,14 @@
+.up-for-grabs {
+    margin-top: 20px;
+  }
+  
+  .up-for-grabs h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .sections {
+    display: flex;
+    flex-direction: column; /* Stack sections vertically */
+    gap: 20px;
+  }
