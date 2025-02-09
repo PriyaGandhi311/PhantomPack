@@ -16,7 +16,6 @@ const Leaderboard: React.FC = () => {
       try {
         const response = await fetch('http://localhost:5000/leaderboard/top5');
         const data = await response.json();
-        console.log(data)
         setTopFive(data);
       } catch (error) {
         console.error('Error fetching top 5 users:', error);
@@ -31,8 +30,10 @@ const Leaderboard: React.FC = () => {
       <h2>Leaderboard</h2>
       <ul>
         {topFive.map((user, index) => (
-          <li key={index}>
-            {user.name} - {user.points} points
+          <li key={index} className={index === 0 ? 'first-place' : ''}>
+            <span className="rank">{index + 1}.</span>
+            <span className="name">{user.name}</span>
+            <span className="points">{user.points} points</span>
           </li>
         ))}
       </ul>

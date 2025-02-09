@@ -1,19 +1,91 @@
+/* General Styles */
+.leaderboard {
+  background-color: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 0.5s ease-in-out;
+}
+
 .leaderboard h2 {
-    font-size: 24px;
-    margin-bottom: 15px;
+  font-size: 24px;
+  font-weight: 600;
+  color: #1f2937; /* Gray-800 */
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.leaderboard ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.leaderboard li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 18px;
+  margin: 10px 0;
+  padding: 15px;
+  background-color: #f9fafb; /* Gray-50 */
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.leaderboard li:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Rank, Name, and Points Styling */
+.rank {
+  font-weight: 600;
+  color: #3b82f6; /* Blue-500 */
+}
+
+.name {
+  flex-grow: 1;
+  margin: 0 15px;
+  color: #1f2937; /* Gray-800 */
+}
+
+.points {
+  font-weight: 600;
+  color: #10b981; /* Green-500 */
+}
+
+/* Special Appearance for First Place */
+.first-place {
+  background: linear-gradient(135deg, #fde047, #fbbf24); /* Yellow gradient */
+  color: white;
+  animation: glow 2s infinite alternate;
+}
+
+.first-place .rank,
+.first-place .name,
+.first-place .points {
+  color: white;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
   }
-  
-  .leaderboard ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0; /* Remove default margin */
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
-  
-  .leaderboard li {
-    font-size: 18px;
-    margin: 10px 0;
-    padding: 10px;
-    background-color: white;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+@keyframes glow {
+  from {
+    box-shadow: 0 0 10px rgba(253, 224, 71, 0.7);
   }
+  to {
+    box-shadow: 0 0 20px rgba(253, 224, 71, 0.9);
+  }
+}
