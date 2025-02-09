@@ -35,10 +35,8 @@ def register_user():
         userId = data.get('userId')
         name = data.get('name')
         email = data.get('email')
-        phone = data.get('phone')
-        address = data.get('address')
 
-        if not all([name, email, phone, address]):
+        if not all([name, email, userId]):
             return jsonify({"error": "Missing required fields"}), 400
 
         if not hasattr(db, 'db'):
@@ -47,10 +45,10 @@ def register_user():
         user = db.Users.insert_one({
             "name": name,
             "email": email,
-            "phone": phone,
-            "address": address,
             "userId": userId,
-            "points": 0  
+            "points": 0 ,
+            "phone": None,
+            "address": None
         })
 
         return jsonify({"message": "User registered successfully", "user_id": str(user.inserted_id)}), 201
@@ -107,7 +105,7 @@ def get_users():
             "user_id": str(user["_id"]),
             "name": user["name"],
             "email": user["email"],
-            "phone": user["phone"],
+            "phone": user.get("phone", ""),
             "address": user.get("address", ""),
             "points": user["points"]
         })
@@ -122,17 +120,42 @@ def get_user_profile(user_id):
         if not user:
             return jsonify({"message": "User not found"}), 404
 
-        return jsonify({
+        return jsonify({    
+            "user_id": str(user["_id"]),
             "name": user["name"],
-            "userId": str(user["_id"]),
             "email": user["email"],
-            "phone": user["phone"],
+            "phone": user.get("phone", ""),
             "address": user.get("address", ""),
             "points": user["points"]
         }), 200
 
-    except InvalidId:
-        return jsonify({"error": "Invalid user ID format"}), 400
+    # except InvalidId:
+    #     return jsonify({"error": "Invalid user ID format"}), 400
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/profile/<user_id>', methods=['POST'])
+def edit_user_profile(user_id):
+    try:
+        user = db.Users.find_one({"userId": user_id})
+        print(user)
+        if not user:
+            return jsonify({"message": "User not found"}), 404
+        
+        data = request.get_json(force=True)
+        phone = data.get('phone')
+        address = data.get('address')
+        print(data)
+        if not all([phone, address]):
+            return jsonify({"error": "Missing required fields"}), 400
+
+        if not hasattr(db, 'db'):
+            return jsonify({"error": "MongoDB connection failed"}), 500
+
+        db.Users.update_one({"userId": user_id}, {"$set": {"phone": phone, "address": address}})
+        return jsonify({"message": "User's phone and address added successfully"}), 201
+
+
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
