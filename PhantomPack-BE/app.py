@@ -142,9 +142,11 @@ def get_item(item_id):
     if item:
         # Convert ObjectId to string for JSON serialization
         item['_id'] = str(item['_id'])
-        item['donor_id'] = str(item['donor_id'])
-        if item['receiver_id']:
-            item['receiver_id'] = str(item['receiver_id'])
+        existing_user = db.Users.find_one({"userId": str(item["donor_id"])})
+        item["donor_name"] = existing_user["name"]
+        image_base64 = base64.b64encode(item['image']).decode('utf-8')
+        item["image"] = image_base64
+
         return jsonify(item), 200
     else:
         return jsonify({"error": "Item not found"}), 404
@@ -229,6 +231,19 @@ def create_transaction():
     if item.get('receiver_id'):
         return jsonify({"error": "Item already received"}), 400
 
+    donor = db.users.find_one({"user_id": item['donor_id']})
+    if not donor:
+        return jsonify({"error": "Donor not found"}), 404
+
+    category_points = {
+        "food": 30,
+        "clothing": 20,
+        "accessories": 15,
+        "other": 10
+    }
+
+    points_earned = category_points.get(item.get('category', 'other'), 10)
+
     transaction_id = str(uuid.uuid4())
 
     transaction = db.transactions.insert_one({
@@ -236,7 +251,8 @@ def create_transaction():
         "item_id": item_id,
         "donor_id": item['donor_id'],
         "receiver_id": ObjectId(receiver_id),
-        "transaction_date": datetime.utcnow()
+        "transaction_date": datetime.utcnow(),
+        "points_earned": points_earned
     })
 
     db.items.update_one(
@@ -244,9 +260,15 @@ def create_transaction():
         {"$set": {"receiver_id": ObjectId(receiver_id)}}
     )
 
+    db.users.update_one(
+        {"user_id": item['donor_id']},
+        {"$inc": {"points": points_earned}}
+    )
+
     return jsonify({
         "message": "Transaction created successfully",
-        "transaction_id": transaction_id
+        "transaction_id": transaction_id,
+        "points_earned": points_earned
     }), 201
 
 @app.route('/orders/<user_id>', methods=['GET'])
