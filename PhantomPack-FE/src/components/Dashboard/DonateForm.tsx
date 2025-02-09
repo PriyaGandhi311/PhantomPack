@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import './DonateForm.css';
 import { useAuth0 } from '@auth0/auth0-react';
+import { useNavigate } from 'react-router-dom';
 
 type DonateFormProps = {
   onClose: () => void; // Function to close the form
@@ -14,6 +15,7 @@ const DonateForm = ({ onClose }: DonateFormProps) => {
   const [description, setDescription] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false); // Loading state
   const { user } = useAuth0();
+  const navigate = useNavigate();
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -72,6 +74,10 @@ const DonateForm = ({ onClose }: DonateFormProps) => {
     } finally {
       setIsSubmitting(false); // Stop loading
     }
+  };
+
+  const handleCancel = () => {
+    navigate('/'); // Redirect to the Dashboard
   };
 
   return (
@@ -143,7 +149,7 @@ const DonateForm = ({ onClose }: DonateFormProps) => {
           <div className="form-actions">
             <button
               type="button"
-              onClick={onClose}
+              onClick={handleCancel}
               disabled={isSubmitting}
             >
               Cancel
