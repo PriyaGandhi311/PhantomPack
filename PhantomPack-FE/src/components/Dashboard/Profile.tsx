@@ -1,5 +1,6 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import AuthButton from "./AuthButton";
 import "./Profile.css";
 
@@ -131,9 +132,9 @@ const Profile = () => {
                             Save Changes
                         </button>
                     ) : (
-                        <button className="order-history-button">
+                        <Link to="/order-history" className="order-history-button">
                             Order History
-                        </button>
+                        </Link>
                     )}
                     <AuthButton />
                 </div>
