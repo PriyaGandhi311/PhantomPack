@@ -1,4 +1,5 @@
 import './Accessories.css';
+import { Link } from 'react-router-dom';
 import {useState} from 'react';
 interface AccessoriesItems {
   image: string;
@@ -24,6 +25,7 @@ const Accessories = ({items} : AccessoriesProps) => {
       <h3>Accessories</h3>
       <div className="cards-container">
         {visibleItems.map((item)=>(
+          <Link to={"/item/"+item.item_id} >
           <div key={item.item_id} className="card">
             {item.image ? (
               <img src={`data:image/jpeg;base64,${item.image}`} alt={item.item_name} className="accessories-image"/>
@@ -33,6 +35,7 @@ const Accessories = ({items} : AccessoriesProps) => {
             <p>{item.item_name}</p>
             <p>Donated by: {item.donor_name}</p>
           </div>
+          </Link>
         ))}
       </div>
       <div>

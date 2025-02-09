@@ -34,7 +34,7 @@ const Food = ({ items }: FoodProps) => {
             ) : (
               <p>No image available</p>
             )}
-            <p>Item: {item.item_name}</p>
+            <p> {item.item_name}</p>
             <p>Donated by: {item.donor_name}</p>
           </div>
           </Link>

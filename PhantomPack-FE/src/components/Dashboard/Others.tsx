@@ -21,7 +21,7 @@ const Accessories = ({items} : OthersProps) => {
 
   return (
     <div className="others">
-      <h3>Accessories</h3>
+      <h3>Others</h3>
       <div className="cards-container">
         {visibleItems.map((item)=>(
           <div key={item.item_id} className="card">
