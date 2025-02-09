@@ -23,19 +23,21 @@ const Clothes = ({items}: ClothesProps) => {
 
 
   return (
-    <div className="clothes">
-      <h3>Clothes</h3>
-      <div className="cards-container">
+    <div className="clothes-section">
+      <h3 className="section-title">Clothes</h3>
+      <div className="clothes-grid">
         {visibleItems.map((item)=>(
           <Link to={"/item/"+item.item_id} >
-          <div key={item.item_id} className="card">
+          <div key={item.item_id} className="clothes-card">
             {item.image ? (
               <img src={`data:image/jpeg;base64,${item.image}`} alt={item.item_name} className="clothes-image"/>
             ) : (
               <p>No image available</p>
             )}
-            <p>{item.item_name}</p>
-            <p>Donated by: {item.donor_name}</p>
+            <div className="clothes-details">
+              <h4 className='clothes-name'>{item.item_name}</h4>
+              <p className='donated-by'>Donated by: {item.donor_name}</p>
+            </div>
           </div>
           </Link>
         ))}

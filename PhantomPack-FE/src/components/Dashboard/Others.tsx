@@ -21,19 +21,21 @@ const Accessories = ({items} : OthersProps) => {
   const visibleItems = showAll ? items : items.slice(0, initialItemsToShow);
 
   return (
-    <div className="others">
-      <h3>Others</h3>
-      <div className="cards-container">
+    <div className="others-section">
+      <h3 className="section-title">Others</h3>
+      <div className="accessories-grid">
         {visibleItems.map((item)=>(
           <Link to={"/item/"+item.item_id} >
-          <div key={item.item_id} className="card">
+          <div key={item.item_id} className="others-card">
             {item.image ? (
               <img src={`data:image/jpeg;base64,${item.image}`} alt={item.item_name} className="others-image"/>
             ) : (
               <p>No image available</p>
             )}
-            <p>{item.item_name}</p>
-            <p>Donated by: {item.donor_name}</p>
+            <div className="others-details">
+              <h4 className='others-name'>{item.item_name}</h4>
+              <p className='donated-by'>Donated by: {item.donor_name}</p>
+            </div>
           </div>
           </Link>
         ))}
