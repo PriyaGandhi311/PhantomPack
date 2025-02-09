@@ -20,7 +20,9 @@ const Dashboard = () => {
                     onChange={(e) => setSearchQuery(e.target.value)}
                 />
                 <div className="button-group">
-                    <button className="donate-button">Donate</button>
+                    <Link to="/donate" className="donate-button">
+                        Donate
+                    </Link>
                     {isAuthenticated ? (
                         <Link to="/profile" className="profile-button">
                             Profile
