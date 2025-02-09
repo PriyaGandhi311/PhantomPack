@@ -124,17 +124,14 @@ def get_items():
         image_base64 = base64.b64encode(item['image']).decode('utf-8')
         # else:
         #     image_base64 = None
-        items_list.append({
-            "image" : image_base64,
-            "item_name":item["item_name"],
-            "item_id": str(item["item_id"]),
-            "category": item["category"],
-            # "description": item["description"],
-            # "expiry_date": item.get("expiry_date", ""),
-            "donor_name" : existing_user["name"],
-            # "donor_id": str(item["donor_id"]),
-            # "receiver_id": str(item["receiver_id"]) if item.get("receiver_id") else None
-        })
+        if item.get("receiver_id") == None:
+            items_list.append({
+                "image" : image_base64,
+                "item_name":item["item_name"],
+                "item_id": str(item["item_id"]),
+                "category": item["category"],
+                "donor_name" : existing_user["name"],
+            })
     print("item_list",  items_list)
     return jsonify(items_list), 200
 
@@ -252,5 +249,31 @@ def create_transaction():
         "transaction_id": transaction_id
     }), 201
 
+@app.route('/orders/<user_id>', methods=['GET'])
+def get_orders(user_id):
+    # user_id = request.args.get('user_id')  # Get user_id from query parameters
+
+    if not user_id:
+        return jsonify({"error": "user_id is required"}), 400
+
+    # Fetch donated items (where donor_id matches user_id)
+    donated_items = list(db.items.find({"donor_id": user_id}))
+
+    # Fetch received items (where receiver_id matches user_id)
+    received_items = list(db.items.find({"receiver_id": user_id}))
+
+    # Convert ObjectId to string for JSON serialization
+    def convert_object_ids(items):
+        for item in items:
+            item['_id'] = str(item['_id'])
+            image_base64 = base64.b64encode(item['image']).decode('utf-8')
+            item['image'] = image_base64
+        return items
+    
+    print("donated_items", donated_items)
+    return jsonify({
+        "donated": convert_object_ids(donated_items),
+        "received": convert_object_ids(received_items),
+    }), 200
 if __name__ == '__main__':
     app.run(debug=True)
