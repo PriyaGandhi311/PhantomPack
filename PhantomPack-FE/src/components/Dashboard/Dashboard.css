@@ -11,6 +11,12 @@ header {
   margin-bottom: 20px;
 }
 
+.button-group {
+  display: flex;
+  gap: 10px; /* Add gap between buttons */
+  align-items: center;
+}
+
 .profile-button, .donate-button, .logout-button {
   padding: 10px 20px;
   border: none;
